@@ -1,26 +1,37 @@
 #include <iostream>
+#include <string>
 #include <vector>
 
 using namespace std;
 
+bool is_math_operator(char);
 bool is_decimal_symbol(char);
 bool is_negative_symbol(char);
 bool is_whitespace_or_eol(char);
+bool is_sum_operator(char);
 vector<string> parse_numbers_from(string);
 
-int main()
-{
 
-    const string message = "-90.3 .1 abc@  127.3 .2 -28.3 -2.";
-    const vector<string> numbers = parse_numbers_from(message);
+bool is_sum_operator(char chr);
 
-    for (int i = 0; i < numbers.size(); i++) {
-        cout << numbers[i] << endl;
+int main() {
+    string input = "2 + 6 + 5";
+    string buffer = "";
+    long acc = 0;
+
+
+    for(int i = 0; i<input.length(); i++){
+        char chr = input.at(i);
+
+        if(isdigit(chr)){
+            buffer += chr;
+        } else if(is_math_operator(chr)){
+            acc += stoi(buffer);
+        }
     }
 
-    cout << "Done" << endl;
-    return 0;
 }
+
 
 vector<string> parse_numbers_from(string message) {
     vector<string> numbers;
@@ -56,7 +67,7 @@ vector<string> parse_numbers_from(string message) {
             buffer = chr;
             can_read_negative = false;
         }
-        else if (is_whitespace_or_eol(chr)) {
+        else if (is_whitespace_or_eol(chr) or is_sum_operator(chr)) {
             if (buffer != "") {
                 numbers.push_back(buffer);
                 buffer = "";
@@ -72,6 +83,10 @@ vector<string> parse_numbers_from(string message) {
     return numbers;
 }
 
+bool is_sum_operator(char chr) {
+    return chr == '+';
+}
+
 
 bool is_decimal_symbol(char chr) {
     return chr == '.';
@@ -83,4 +98,8 @@ bool is_negative_symbol (char chr) {
 
 bool is_whitespace_or_eol(char chr) {
     return chr == ' ' or chr == '\0';
+}
+
+bool is_math_operator(char chr){
+    return chr == '+';
 }
