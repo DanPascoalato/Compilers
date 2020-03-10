@@ -7,4 +7,9 @@ set(source_dir "${PROJECT_SOURCE_DIR}/src")
 
 file(GLOB source_files "${source_dir}/*.cpp")
 
-add_executable(compilers_101 src/SumParser.cpp src/teste.cpp)
+add_executable(compilers_101
+#        src/SumParser.cpp
+#        src/HerediaCcodes/usuario.h
+#        src/HerediaCcodes/main.c
+#        src/HerediaCcodes/usuario.c
+        src/main.c src/LinkedListParser.cpp)
